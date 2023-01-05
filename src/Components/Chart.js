@@ -7,13 +7,13 @@ import LocationContext from "../Context/LocationContext";
 ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 const Chart = () => {
-  const [dailyData, setDailyData] = useContext(LocationContext);
-  //   console.log(dailyData);
+  const [dailyData, setDailyData] = useContext(LocationContext).regular;
   const chartConfigs = {
     type: "area2d",
-    width: "700",
-    height: "400",
+    width: '100%',
+    // height: "400",
     dataFormat: "json",
+    renderAt: "chart-container",
     dataSource: {
       chart: {
         caption: "Temp vs Rain",
