@@ -1,8 +1,7 @@
 import { useState } from 'react';
-
 import Ui from './Components/Ui';
-
 import LocationContext from './Context/LocationContext';
+
 function App() {
   const [dailyData, setDailyData] = useState({})
   const [windSpeed, setWindSpeed] = useState('')

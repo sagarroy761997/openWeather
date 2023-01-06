@@ -4,7 +4,7 @@ import FusionCharts from "fusioncharts";
 import Column2D from "fusioncharts/fusioncharts.charts";
 import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import LocationContext from "../Context/LocationContext";
-ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
+ReactFC.fcRoot(FusionCharts, FusionTheme);
 
 const Chart = () => {
   const [dailyData, setDailyData] = useContext(LocationContext).regular;

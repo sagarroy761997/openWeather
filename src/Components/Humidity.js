@@ -53,7 +53,7 @@ const Rain = () => {
     type: "hlineargauge",
     renderAt: "chart-container",
     width: "100%",
-    height: 150,
+    height: 160,
     dataFormat: "json",
     dataSource: dataSource,
   };

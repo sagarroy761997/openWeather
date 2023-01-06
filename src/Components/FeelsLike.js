@@ -11,14 +11,14 @@ import { Box } from "@mui/system";
 
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
 const FeelsLike = () => {
-  const [feelsLike, setFeelsLike] = useContext(LocationContext).feelsLike
+  const [feelsLike, setFeelsLike] = useContext(LocationContext).feelsLike;
   const dataSource = {
     chart: {
       caption: "What it feels like?",
       lowerLimit: "0",
       upperLimit: "100",
       showValue: "1",
-      numberSuffix: "*C",
+      numberSuffix: "°C",
       theme: "fusion",
       showToolTip: "0",
     },
@@ -52,18 +52,12 @@ const FeelsLike = () => {
   const chartConfigs = {
     type: "hlineargauge",
     renderAt: "chart-container",
-    width: '100%',
-    height: 150,
+    width: "100%",
+    height: 160,
     dataFormat: "json",
     dataSource: dataSource,
   };
-  return (
-    <>
-      
-        <ReactFC {...chartConfigs} />
-      
-    </>
-  );
+  return <ReactFC {...chartConfigs} />;
 };
 
 export default FeelsLike;

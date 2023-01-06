@@ -2,11 +2,11 @@ import React, {useContext} from 'react';
 import LocationContext from '../Context/LocationContext';
 import * as Widgets from "fusioncharts/fusioncharts.widgets.js";
 import FusionCharts from 'fusioncharts';
-import Charts from 'fusioncharts/fusioncharts.charts';
+import Column2D from 'fusioncharts/fusioncharts.charts';
 import ReactFC from 'react-fusioncharts';
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
-ReactFC.fcRoot(FusionCharts, Charts, FusionTheme,Widgets);
+ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme,Widgets);
 
 
 const WindSpeed=()=>{
