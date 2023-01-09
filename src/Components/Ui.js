@@ -13,8 +13,7 @@ import { styled } from "@mui/material/styles";
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
 
 import Chart from "./Chart";
 import Rain from "./Rain";
@@ -24,7 +23,6 @@ import FeelsLike from "./FeelsLike";
 
 const useStyles = makeStyles({
   root: {
-    fontSize: '1.1rem',
     backgroundColor: "#b5d8fe",
     display: "flex",
     justifyContent: "center",
@@ -44,9 +42,22 @@ const useStyles = makeStyles({
     padding: "2% 2% 2% 2%",
     display: "flex",
     flexDirection: "column",
-    // justifyContent:'space-between',
+    // justifyContent:'space-around',
     width: "30%",
     height: "100%",
+  },
+  dayNight: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  day: {
+    display: "flex",
+    alignItems: "center",
+  },
+  night: {
+    display: "flex",
+    alignItems: "center",
   },
   graphs: {
     height: "100%",
@@ -232,25 +243,27 @@ const Ui = () => {
                 {"°F"}
               </Box>
             </Box>
-            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-              <Box >
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box>
                 <Box className={classes.location}>
                   <NearMeOutlinedIcon fontSize="small" />
                   <Box>{`${area}, ${country}`}</Box>
                 </Box>
                 <Box>{date.toDateString()}</Box>
               </Box>
-              <Box sx={{display: 'flex', flexDirection: 'column' , justifyContent: 'right', alignItems: 'center'}}>
-              <Box sx={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
-                <Box><WbSunnyIcon fontSize="small"/></Box>
-                <Box>{day}</Box>
-                
-              </Box>
-              <Box sx={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
-                <Box><BedtimeIcon fontSize="small"/></Box>
-                <Box>{night}</Box>
-                
-              </Box>
+              <Box className={classes.dayNight}>
+                <Box className={classes.day}>
+                  <Box>
+                    <WbSunnyIcon fontSize="small" />
+                  </Box>
+                  <Box>{day}</Box>
+                </Box>
+                <Box className={classes.night}>
+                  <Box>
+                    <BedtimeIcon fontSize="small" />
+                  </Box>
+                  <Box>{night}</Box>
+                </Box>
               </Box>
             </Box>
 
