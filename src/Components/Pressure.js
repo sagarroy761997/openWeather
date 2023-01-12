@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 
+// import * as Widgets from 'fusioncharts/fusioncharts.widgets.js';
 import FusionCharts from 'fusioncharts';
 
 import Charts from 'fusioncharts/fusioncharts.charts';
@@ -8,33 +9,33 @@ import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import allData from '../Context/allData';
 
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
-function Rain() {
-  const humidity = useContext(allData).humidity[0];
+function Pressure() {
+  const pressure = useContext(allData).pressure[0];
   const dataSource = {
     chart: {
-      caption: 'Humidity Chart',
-      lowerLimit: '0',
-      upperLimit: '100',
+      caption: 'Pressure Chart',
+      lowerLimit: '500',
+      upperLimit: '2000',
       showValue: '1',
-      numberSuffix: '%',
+      numberSuffix: 'hpa',
       theme: 'fusion',
-      showToolTip: '0',
+      // showToolTip: "1",
     },
     colorRange: {
       color: [
         {
-          minValue: '0',
-          maxValue: '50',
+          minValue: '500',
+          maxValue: '1000',
           code: '#e5f1fe',
         },
         {
-          minValue: '50',
-          maxValue: '75',
+          minValue: '1000',
+          maxValue: '1500',
           code: '#629bdb',
         },
         {
-          minValue: '75',
-          maxValue: '100',
+          minValue: '1500',
+          maxValue: '2000',
           code: '#0039cb',
         },
       ],
@@ -42,7 +43,7 @@ function Rain() {
     pointers: {
       pointer: [
         {
-          value: humidity,
+          value: pressure,
         },
       ],
     },
@@ -54,9 +55,10 @@ function Rain() {
     height: 160,
     dataFormat: 'json',
     dataSource,
+    // baseFontSize: "30",
   };
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <ReactFC {...chartConfigs} />;
 }
 
-export default Rain;
+export default Pressure;
