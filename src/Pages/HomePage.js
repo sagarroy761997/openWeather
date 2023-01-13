@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import {
-  Button,
-  Typography,
-  TextField,
-  Box,
+  Button, Typography, TextField, Box, Snackbar,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Switch from '@mui/material/Switch';
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-
+import CloseIcon from '@mui/icons-material/Close';
 import NearMeOutlinedIcon from '@mui/icons-material/NearMeOutlined';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import BedtimeIcon from '@mui/icons-material/Bedtime';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
+
 import allData from '../Context/allData';
 
 import RainProbability from '../Components/RainProbability';
@@ -23,9 +21,6 @@ import Humidity from '../Components/Humidity';
 import FeelsLike from '../Components/FeelsLike';
 import WindSpeed from '../Components/WindSpeed';
 
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-
 import CurrentLocationData from '../Helpers/Api/CurrentDataApi/CurrentLocationData';
 import HourlyLocationData from '../Helpers/Api/HourlyDataApi/HourlyLocationData';
 import CurrentCityData from '../Helpers/Api/CurrentDataApi/CurrentCityData';
@@ -33,20 +28,24 @@ import HourlyCityData from '../Helpers/Api/HourlyDataApi/HourlyCityData';
 
 const useStyles = makeStyles({
   root: {
-    // height:'100vh',
     backgroundColor: '#b5d8fe',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     boxSizing: 'border-box',
     overflow: 'hidden',
+    minHeight: '100vh',
+    // height: '100vh',
   },
   out: {
     display: 'flex',
-    margin: '5% 0 5% 0',
-    height: '95%',
-    width: '95%',
-    borderRadius: '30px',
+    // margin: '5% 0 5% 0',
+    // height: '95%',
+    // height: '100vh',
+    // width: '95%',
+    height: '100%',
+    width: '100%',
+    // borderRadius: '30px',
     backgroundColor: '#5d9ce6',
   },
   data: {
@@ -75,41 +74,27 @@ const useStyles = makeStyles({
     height: '100%',
     width: '70%',
     backgroundColor: '#e4f1ff',
-    borderRadius: '30px',
+    borderRadius: '30px 0 0 30px',
   },
   areaChart: {
     borderRadius: '30px',
     margin: '5%',
-
     width: '90%',
     overflow: 'hidden',
   },
   innerBox1: {
     margin: '5%',
     display: 'flex',
-    // flexWrap: 'wrap',
+    flexWrap: 'wrap',
     gap: '5%',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  rain: {
+  linearGauge: {
     borderRadius: '30px',
-    marginRight: '5%',
-    width: '33.33%',
+    // marginRight: '5%',
+    width: '30%',
     overflow: 'hidden',
   },
-  feelsLike: {
-    borderRadius: '30px',
-    marginRight: '5%',
-    overflow: 'hidden',
-    width: '33.33%',
-  },
-  humidity: {
-    borderRadius: '30px',
-    overflow: 'hidden',
-    width: '33.33%',
-  },
-
   innerBox2: {
     display: 'flex',
     justifyContent: 'center',
@@ -118,7 +103,6 @@ const useStyles = makeStyles({
   },
   windSpeed: {
     borderRadius: '30px',
-
     overflow: 'hidden',
     width: '33.33%',
   },
@@ -141,7 +125,7 @@ const useStyles = makeStyles({
   description: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'start !important',
     alignItems: 'center',
   },
   temp: {
@@ -149,6 +133,40 @@ const useStyles = makeStyles({
   },
   plusIcon: {
     color: 'white',
+  },
+  loader: {
+    color: 'white !important',
+  },
+  details: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  switch: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  Typography: {
+    color: 'white',
+    textAlign: 'left',
+  },
+  textfield: {
+    backgroundColor: 'white',
+    border: 'none !important',
+    borderRadius: '4px',
+    width: '100%',
+  },
+  submit: {
+    backgroundColor: 'white !important',
+    color: 'blue',
+    width: '25% !important',
+  },
+  form: {
+    marginTop: '15%',
+  },
+  submitBox: {
+    marginTop: '7%',
+    display: 'flex',
+    justifyContent: 'end',
   },
 });
 
@@ -167,11 +185,21 @@ function HomePage() {
   const setPressure = useContext(allData).pressure[1];
   const setFeelsLike = useContext(allData).feelsLike[1];
   const setHumidity = useContext(allData).humidity[1];
-  const [checked, setChecked] = useState('false');
+  const [checked, setChecked] = useState(false);
   const [day, setDay] = useState('');
   const [night, setNight] = useState('');
   const [differentCity, setDifferentCity] = useContext(allData).newCity;
   const [date, setDate] = useState(new Date().toDateString());
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const locationWeatherHelperFunction = () => {
     CurrentLocationData().then((response) => {
@@ -186,7 +214,7 @@ function HomePage() {
       setDescription(response?.weather?.[0]?.description.toUpperCase());
       setChecked(false);
       setUnitTemp(' °C');
-
+      setLoading(false);
       setDay(
         new Date(
           parseInt(response?.sys?.sunrise, 10) * 1000,
@@ -198,12 +226,13 @@ function HomePage() {
         ).toLocaleTimeString(),
       );
     });
+
     HourlyLocationData().then((response) => {
       setDailyData(
         response.list.map((element) => ({
-          label: new Date(
-            parseInt(element?.dt, 10) * 1000,
-          ).toLocaleDateString(),
+          label: new Date(parseInt(element?.dt, 10) * 1000)
+            .toString()
+            .slice(3, 21),
           value: element.main.humidity,
         })),
       );
@@ -216,40 +245,45 @@ function HomePage() {
 
   const cityWeatherHelperFunction = async () => {
     CurrentCityData(differentCity).then((response) => {
-      setMainTemp(response?.main?.temp);
-      setCountry(response?.sys?.country);
-      setArea(response?.name);
-      setWindSpeed(response?.wind?.speed);
-      setPressure(response?.main?.pressure);
-      setFeelsLike(response?.main?.feels_like);
-      setHumidity(response?.main?.humidity);
-      setIcon(response?.weather?.[0]?.icon);
-      setDescription(response?.weather?.[0]?.description.toUpperCase());
-      setChecked(false);
-      setUnitTemp(' °C');
-      setDate(new Date(parseInt(response?.dt, 10) * 1000).toDateString());
+      if (response.cod === 200) {
+        setMainTemp(response?.main?.temp);
+        setCountry(response?.sys?.country);
+        setArea(response?.name);
+        setWindSpeed(response?.wind?.speed);
+        setPressure(response?.main?.pressure);
+        setFeelsLike(response?.main?.feels_like);
+        setHumidity(response?.main?.humidity);
+        setIcon(response?.weather?.[0]?.icon);
+        setDescription(response?.weather?.[0]?.description.toUpperCase());
+        setChecked(false);
+        setUnitTemp(' °C');
+        setDate(new Date(parseInt(response?.dt, 10) * 1000).toDateString());
 
-      setDay(
-        new Date(
-          parseInt(response?.sys?.sunrise, 10) * 1000,
-        ).toLocaleTimeString(),
-      );
-      setNight(
-        new Date(
-          parseInt(response?.sys?.sunset, 10) * 1000,
-        ).toLocaleTimeString(),
-      );
+        setDay(
+          new Date(
+            parseInt(response?.sys?.sunrise, 10) * 1000,
+          ).toLocaleTimeString(),
+        );
+        setNight(
+          new Date(
+            parseInt(response?.sys?.sunset, 10) * 1000,
+          ).toLocaleTimeString(),
+        );
+      } else {
+        handleClick();
+      }
     });
     HourlyCityData(differentCity).then((response) => {
       setDailyData(
         response.list.map((element) => ({
-          label: new Date(
-            parseInt(element?.dt, 10) * 1000,
-          ).toLocaleDateString(),
+          label: new Date(parseInt(element?.dt, 10) * 1000)
+            .toString()
+            .slice(3, 21),
           value: element.main.humidity,
         })),
       );
     });
+    setDifferentCity('');
   };
   const changeCity = (event) => {
     setDifferentCity(event.target.value);
@@ -269,91 +303,122 @@ function HomePage() {
     conversion();
     setChecked(!checked);
   };
+  const action = (
+    <>
+      <Button color="primary" size="small" onClick={handleClose}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </>
+  );
   return (
     <Box className={classes.root}>
-      <Box className={classes.out}>
-        <Box className={classes.data}>
-          <Box className={classes.buttons}>
-            <IconButton onClick={cityWeatherHelperFunction}>
-              <AddBoxIcon className={classes.plusIcon} />
-            </IconButton>
-            <Box>
-              °C
-              <Switch
-                onChange={switchHandler}
-                checked={checked}
-              />
-              °F
-            </Box>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Box>
-              <Box className={classes.location}>
-                <NearMeOutlinedIcon fontSize="small" />
-                <Box>{`${area}, ${country}`}</Box>
+      {loading ? (
+        <CircularProgress
+          size={150}
+          variant="indeterminate"
+          className={classes.loader}
+        />
+      ) : (
+        <Box className={classes.out}>
+          <Box className={classes.data}>
+            <Box className={classes.buttons}>
+              <IconButton onClick={handleClick}>
+                <AddBoxIcon className={classes.plusIcon} />
+              </IconButton>
+              <Box className={classes.switch}>
+                <Typography className={classes.Typography}>°C</Typography>
+                <Switch onChange={switchHandler} checked={checked} />
+                <Typography className={classes.Typography}>°F</Typography>
               </Box>
-              <Box>{date}</Box>
             </Box>
-            <Box className={classes.dayNight}>
-              <Box className={classes.day}>
-                <Box>
-                  <WbSunnyIcon fontSize="small" />
+            <Box className={classes.details}>
+              <Box>
+                <Typography className={classes.Typography}>
+                  <NearMeOutlinedIcon fontSize="small" />
+                  {`${area}, ${country}`}
+                </Typography>
+                <Typography className={classes.Typography}>{date}</Typography>
+              </Box>
+              <Box className={classes.dayNight}>
+                <Box className={classes.day}>
+                  <Typography className={classes.Typography}>
+                    <WbSunnyIcon fontSize="small" />
+                    {day}
+                  </Typography>
                 </Box>
-                <Box>{day}</Box>
-              </Box>
-              <Box className={classes.night}>
-                <Box>
+                <Typography className={classes.Typography}>
                   <BedtimeIcon fontSize="small" />
-                </Box>
-                <Box>{night}</Box>
+                  {night}
+                </Typography>
               </Box>
             </Box>
-          </Box>
-
-          <Box className={classes.description}>
-            <Box>
-              <Typography
-                className={classes.temp}
-              >
+            <Box className={classes.description}>
+              <Typography className={classes.temp}>
                 {`${mainTemp} ${unitTemp}`}
               </Typography>
-            </Box>
-            <Box>
               <img
                 src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
                 alt="weatherIcon"
               />
+              <Typography className={classes.Typography}>
+                {description}
+              </Typography>
             </Box>
-            <Box>{description}</Box>
+            <Box className={classes.form}>
+              <TextField
+                className={classes.textfield}
+                value={differentCity}
+                onChange={changeCity}
+              />
+              <Box className={classes.submitBox}>
+                <Button onClick={cityWeatherHelperFunction} className={classes.submit}>
+                  Submit
+                </Button>
+                <Snackbar
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                  message="City Not Found"
+                  action={action}
+                />
+              </Box>
+            </Box>
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <TextField value={differentCity} onChange={changeCity} />
-            <Button onClick={cityWeatherHelperFunction}>Submit</Button>
-
+          <Box className={classes.graphs}>
+            <Box className={classes.areaChart}>
+              <RainProbability />
+            </Box>
+            <Box className={classes.innerBox1}>
+              <Box className={classes.linearGauge}>
+                <Pressure />
+              </Box>
+              <Box className={classes.linearGauge}>
+                <FeelsLike />
+              </Box>
+              <Box className={classes.linearGauge}>
+                <Humidity />
+              </Box>
+            </Box>
+            <Box className={classes.innerBox2}>
+              <Box className={classes.windSpeed}>
+                <WindSpeed />
+              </Box>
+            </Box>
           </Box>
         </Box>
-        <Box className={classes.graphs}>
-          <Box className={classes.areaChart}>
-            <RainProbability />
-          </Box>
-          <Box className={classes.innerBox1}>
-            <Box className={classes.rain}>
-              <Pressure />
-            </Box>
-            <Box className={classes.feelsLike}>
-              <FeelsLike />
-            </Box>
-            <Box className={classes.humidity}>
-              <Humidity />
-            </Box>
-          </Box>
-          <Box className={classes.innerBox2}>
-            <Box className={classes.windSpeed}>
-              <WindSpeed />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
+      )}
     </Box>
   );
 }

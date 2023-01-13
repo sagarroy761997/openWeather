@@ -8,12 +8,12 @@ import allData from '../Context/allData';
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
 
 function RainProbability() {
+  console.log(useContext(allData));
   const dailyData = useContext(allData).regular[0];
 
   const chartConfigs = {
     type: 'line',
     width: '100%',
-    // height: "40%",
     dataFormat: 'json',
     renderAt: 'chart-container',
     dataSource: {
@@ -30,14 +30,21 @@ function RainProbability() {
         numberSuffix: '%',
         theme: 'fusion',
         labelStep: '8',
-
       },
       data: dailyData,
     },
   };
+  const {
+    type, width, dataFormat, renderAt, dataSource,
+  } = chartConfigs;
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <ReactFC {...chartConfigs} />
+    <ReactFC
+      type={type}
+      width={width}
+      dataFormat={dataFormat}
+      renderAt={renderAt}
+      dataSource={dataSource}
+    />
   );
 }
 
