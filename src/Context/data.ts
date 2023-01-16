@@ -1,12 +1,6 @@
-import React, {useState} from "react";
+import { useState } from "react";
 
-import { allData } from "./Context/dataContext";
-
-import HomePage from "./Pages/HomePage";
-
-
-function App() {
-
+const ContextData = () => {
   const [dailyData, setDailyData] = useState([{
     label: new Date()
       .toString(), value: 60
@@ -31,12 +25,7 @@ function App() {
     differentCity,
     setDifferentCity,
   };
+  return contextData;
+};
 
-  return (
-    <allData.Provider value = {contextData}>
-      <HomePage />
-    </allData.Provider>
-  );
-}
-
-export default App;
+export default ContextData;
