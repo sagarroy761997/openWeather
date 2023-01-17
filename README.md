@@ -1,5 +1,4 @@
 
-# I am working on the typescript version. It is not ready yet.I t just need little bit more time.
 
 # Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
