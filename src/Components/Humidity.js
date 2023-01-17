@@ -9,7 +9,7 @@ import allData from '../Context/allData';
 
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
 function Rain() {
-  const humidity = useContext(allData).humidity[0];
+  const { humidity } = useContext(allData);
 
   const chartConfigs = {
     type: 'hlineargauge',

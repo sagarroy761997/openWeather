@@ -180,15 +180,19 @@ function HomePage() {
   const [description, setDescription] = useState('');
   const [area, setArea] = useState('');
   const [unitTemp, setUnitTemp] = useState(' °C');
-  const setDailyData = useContext(allData).regular[1];
-  const setWindSpeed = useContext(allData).wind[1];
-  const setPressure = useContext(allData).pressure[1];
-  const setFeelsLike = useContext(allData).feelsLike[1];
-  const setHumidity = useContext(allData).humidity[1];
+  const {
+    setDailyData,
+    setWindSpeed,
+    setPressure,
+    setFeelsLike,
+    setHumidity,
+    differentCity,
+    setDifferentCity,
+  } = useContext(allData);
   const [checked, setChecked] = useState(false);
   const [day, setDay] = useState('');
   const [night, setNight] = useState('');
-  const [differentCity, setDifferentCity] = useContext(allData).newCity;
+
   const [date, setDate] = useState(new Date().toDateString());
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(true);
@@ -379,7 +383,10 @@ function HomePage() {
                 onChange={changeCity}
               />
               <Box className={classes.submitBox}>
-                <Button onClick={cityWeatherHelperFunction} className={classes.submit}>
+                <Button
+                  onClick={cityWeatherHelperFunction}
+                  className={classes.submit}
+                >
                   Submit
                 </Button>
                 <Snackbar

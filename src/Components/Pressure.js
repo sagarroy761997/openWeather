@@ -11,7 +11,7 @@ import allData from '../Context/allData';
 
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme, Widgets);
 function Pressure() {
-  const pressure = useContext(allData).pressure[0];
+  const { pressure } = useContext(allData);
 
   const chartConfigs = {
     type: 'hlineargauge',

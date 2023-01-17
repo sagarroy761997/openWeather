@@ -8,8 +8,7 @@ import allData from '../Context/allData';
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
 
 function RainProbability() {
-  console.log(useContext(allData));
-  const dailyData = useContext(allData).regular[0];
+  const { dailyData } = useContext(allData);
 
   const chartConfigs = {
     type: 'line',

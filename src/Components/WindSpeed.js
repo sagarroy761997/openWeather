@@ -10,7 +10,7 @@ import allData from '../Context/allData';
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme, Widgets);
 
 function WindSpeed() {
-  const windSpeed = useContext(allData).wind[0];
+  const { windSpeed } = useContext(allData);
   const chartConfigs = {
     type: 'angulargauge',
     renderAt: 'chart-container',

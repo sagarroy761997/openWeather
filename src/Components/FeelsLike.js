@@ -10,7 +10,7 @@ import allData from '../Context/allData';
 
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
 function FeelsLike() {
-  const feelsLike = useContext(allData).feelsLike[0];
+  const { feelsLike } = useContext(allData);
 
   const chartConfigs = {
     type: 'hlineargauge',

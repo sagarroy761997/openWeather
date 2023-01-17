@@ -12,14 +12,20 @@ function App() {
   const [differentCity, setDifferentCity] = useState('');
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const contextData = {
-    regular: [dailyData, setDailyData],
-    wind: [windSpeed, setWindSpeed],
-    pressure: [pressure, setPressure],
-    feelsLike: [feelsLike, setFeelsLike],
-    humidity: [humidity, setHumidity],
-    newCity: [differentCity, setDifferentCity],
+    dailyData,
+    setDailyData,
+    windSpeed,
+    setWindSpeed,
+    pressure,
+    setPressure,
+    feelsLike,
+    setFeelsLike,
+    humidity,
+    setHumidity,
+    differentCity,
+    setDifferentCity,
   };
-  // const value = useMemo(() => contextData, []);
+
   return (
     <allData.Provider value={contextData}>
       <HomePage />
