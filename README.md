@@ -20,4 +20,4 @@ this is a weather app built using openWeather API. The link is https://openweath
 - getting current location through navigator in javascript
 
 
-[Screenshot (13)](https://user-images.githubusercontent.com/113674345/214160875-25fb77ff-0bdb-4f67-beed-a394667b92c5.png)
+[Image](https://user-images.githubusercontent.com/113674345/214160875-25fb77ff-0bdb-4f67-beed-a394667b92c5.png)
