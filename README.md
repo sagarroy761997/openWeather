@@ -23,3 +23,6 @@ this is a weather app built using openWeather API. The link is https://openweath
 
 ![Screenshot (13)](https://user-images.githubusercontent.com/113674345/214201800-bc03ecc2-ecea-48cc-ab5e-26a08cfbc058.png)
 ![Screenshot (12)](https://user-images.githubusercontent.com/113674345/214201809-4f245099-b920-47bd-a10a-d7426c0a2c31.png)
+
+# Demo Video link
+https://drive.google.com/file/d/1TENpOdacpDhI9o43NUrH9lN64PZvnead/view?usp=share_link
