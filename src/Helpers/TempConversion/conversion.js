@@ -1,8 +1,8 @@
 const conversion = (temp, unitTemp) => {
   if (unitTemp === ' °C') {
-    return { temp: ((9 / 5) * temp + 32).toFixed(2), unitTemp: ' °F' };
+    return { newTemp: ((9 / 5) * temp + 32).toFixed(2), newUnitTemp: ' °F' };
   }
-  return { temp: ((temp - 32) * (5 / 9)).toFixed(2), unitTemp: ' °C' };
+  return { newTemp: ((temp - 32) * (5 / 9)).toFixed(2), newUnitTemp: ' °C' };
 };
 
 export default conversion;
