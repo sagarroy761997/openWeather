@@ -28,4 +28,4 @@ this is a weather app built using openWeather API. The link is https://openweath
 https://drive.google.com/file/d/1TENpOdacpDhI9o43NUrH9lN64PZvnead/view?usp=share_link
 
 # this project is done by sagarRoy
-# this project is done by sagarRoy1
+# this project is done by sagarRoy12
