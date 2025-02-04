@@ -26,3 +26,5 @@ this is a weather app built using openWeather API. The link is https://openweath
 
 # Demo Video link
 https://drive.google.com/file/d/1TENpOdacpDhI9o43NUrH9lN64PZvnead/view?usp=share_link
+
+# this project is done by sagarRoy
